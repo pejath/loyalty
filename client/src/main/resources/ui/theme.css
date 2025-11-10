@@ -1,0 +1,105 @@
+.root {
+  -fx-font-family: "Segoe UI", "Arial";
+  -fx-background-color: linear-gradient(to bottom, #f5f7ff, #e4e7fb);
+}
+
+.button {
+  -fx-background-color: linear-gradient(to bottom, #5a67d8, #434190);
+  -fx-text-fill: white;
+  -fx-font-weight: 600;
+  -fx-background-radius: 6;
+  -fx-cursor: hand;
+  -fx-effect: dropshadow(gaussian, rgba(67,65,144,0.35), 6, 0.2, 0, 2);
+}
+
+.button:hover {
+  -fx-background-color: linear-gradient(to bottom, #6975e4, #4c51bf);
+}
+
+.button:pressed {
+  -fx-background-color: #3730a3;
+}
+
+.tab-pane {
+  -fx-background-color: transparent;
+}
+
+.tab-pane .tab-header-area {
+  -fx-background-color: transparent;
+}
+
+.tab-pane .tab-header-area .tab {
+  -fx-background-radius: 6 6 0 0;
+  -fx-background-color: rgba(90, 103, 216, 0.15);
+  -fx-text-fill: #1a1c2b;
+  -fx-padding: 6 16 6 16;
+}
+
+.tab-pane .tab-header-area .tab:selected {
+  -fx-background-color: white;
+  -fx-text-fill: #434190;
+  -fx-border-color: transparent;
+  -fx-effect: dropshadow(gaussian, rgba(0,0,0,0.12), 4, 0.2, 0, 2);
+}
+
+.list-view,
+.table-view {
+  -fx-background-color: white;
+  -fx-border-color: rgba(90, 103, 216, 0.25);
+  -fx-border-radius: 6;
+  -fx-background-radius: 6;
+}
+
+.list-view .list-cell {
+  -fx-padding: 8 12 8 12;
+}
+
+.list-view .list-cell:odd {
+  -fx-background-color: rgba(90, 103, 216, 0.05);
+}
+
+.list-view .list-cell:selected {
+  -fx-background-color: rgba(90, 103, 216, 0.3);
+  -fx-text-fill: #1a1c2b;
+}
+
+.label {
+  -fx-text-fill: #1a1c2b;
+}
+
+.text-field,
+.password-field,
+.combo-box,
+.date-picker {
+  -fx-background-color: white;
+  -fx-border-color: rgba(90, 103, 216, 0.35);
+  -fx-border-radius: 6;
+  -fx-background-radius: 6;
+  -fx-padding: 6 10 6 10;
+}
+
+.date-picker .arrow-button,
+.combo-box .arrow-button {
+  -fx-background-color: rgba(90, 103, 216, 0.2);
+}
+
+.scroll-pane,
+.scroll-pane .viewport {
+  -fx-background-color: transparent;
+}
+
+.input-error {
+  -fx-border-color: #e53e3e;
+  -fx-border-width: 2;
+  -fx-background-color: rgba(254, 215, 215, 0.5);
+}
+
+.dialog-pane {
+  -fx-background-color: #ffffff;
+  -fx-background-radius: 8;
+}
+
+.dialog-pane *.header-panel {
+  -fx-background-color: linear-gradient(to right, #5a67d8, #7f9cf5);
+  -fx-text-fill: white;
+}

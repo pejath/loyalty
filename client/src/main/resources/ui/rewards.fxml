@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns:fx="http://javafx.com/fxml/1" spacing="10"
+      alignment="CENTER"
+      xmlns="http://javafx.com/javafx/17"
+      fx:controller="main.java.com.clubloyalty.client.view.LoginController">
+    <children>
+        <Label text="Loyalty Login"/>
+        <TextField fx:id="username" promptText="Username"/>
+        <PasswordField fx:id="password" promptText="Password"/>
+        <Button text="Login" onAction="#onLogin"/>
+    </children>
+    <padding>
+        <Insets top="20" right="20" bottom="20" left="20"/>
+    </padding>
+</VBox>

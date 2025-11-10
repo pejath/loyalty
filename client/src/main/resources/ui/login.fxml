@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<StackPane xmlns="http://javafx.com/javafx/17"
+           xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="main.java.com.clubloyalty.client.view.LoginController"
+           style="-fx-background-color: linear-gradient(to bottom,#e2e8f0,#cbd5f5);">
+  <children>
+    <VBox spacing="12"
+          alignment="CENTER"
+          maxWidth="360"
+          style="-fx-background-color: white; -fx-background-radius: 12; -fx-effect: dropshadow(gaussian, rgba(15,23,42,0.2), 16, 0.2, 0, 6);">
+      <padding>
+        <Insets top="24" right="36" bottom="24" left="36"/>
+      </padding>
+      <children>
+        <Label text="Loyalty Login" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+        <TextField fx:id="username" promptText="Username" maxWidth="260"/>
+        <PasswordField fx:id="password" promptText="Password" maxWidth="260"/>
+        <HBox spacing="12" alignment="CENTER">
+          <Button text="Login" onAction="#onLogin" defaultButton="true" prefWidth="110"/>
+          <Button text="Register" onAction="#openRegister" prefWidth="110"/>
+        </HBox>
+      </children>
+    </VBox>
+  </children>
+</StackPane>
