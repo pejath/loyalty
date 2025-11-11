@@ -11,91 +11,91 @@
         <Insets top="16" right="16" bottom="16" left="16"/>
     </padding>
 
-    <Label text="Admin Panel" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+    <Label text="Панель администратора" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
     <HBox spacing="10" alignment="CENTER_LEFT">
-        <Label text="Signed in as:"/>
+        <Label text="Вы вошли как:"/>
         <Label fx:id="welcomeLbl" text="-"/>
         <Pane HBox.hgrow="ALWAYS"/>
-        <Button text="Back to Client" onAction="#onClient"/>
-        <Button text="Logout" onAction="#onLogout"/>
+        <Button text="В клиент" onAction="#onClient"/>
+        <Button text="Выход" onAction="#onLogout"/>
     </HBox>
 
     <TabPane tabClosingPolicy="UNAVAILABLE">
         <tabs>
-            <Tab fx:id="usersTab" text="Users">
+            <Tab fx:id="usersTab" text="Пользователи">
                 <VBox spacing="8" alignment="TOP_LEFT">
-                    <Label text="System Users" style="-fx-font-weight: bold;"/>
+                    <Label text="Пользователи системы" style="-fx-font-weight: bold;"/>
                     <HBox spacing="8" alignment="CENTER_LEFT">
-                        <TextField fx:id="userSearchField" promptText="Search username..." HBox.hgrow="ALWAYS"/>
-                        <Button text="Search" onAction="#onSearchUsers"/>
+                        <TextField fx:id="userSearchField" promptText="Поиск по нику..." HBox.hgrow="ALWAYS"/>
+                        <Button text="Поиск" onAction="#onSearchUsers"/>
                     </HBox>
                     <ListView fx:id="usersList" prefHeight="220"/>
                     <HBox spacing="8">
-                        <Button text="Refresh" onAction="#onRefreshUsers"/>
-                        <Button text="Create" onAction="#onCreateUser"/>
-                        <Button text="Toggle Enabled" onAction="#onToggleUser"/>
-                        <Button text="Reset Password" onAction="#onResetPassword"/>
+                        <Button text="Обновить" onAction="#onRefreshUsers"/>
+                        <Button text="Создать" onAction="#onCreateUser"/>
+                        <Button text="Вкл/Выкл" onAction="#onToggleUser"/>
+                        <Button text="Восстановить пароль" onAction="#onResetPassword"/>
                     </HBox>
                 </VBox>
             </Tab>
-            <Tab fx:id="membersTab" text="Members">
+            <Tab fx:id="membersTab" text="Участники">
                 <VBox spacing="8" alignment="TOP_LEFT">
-                    <Label text="Members" style="-fx-font-weight: bold;"/>
+                    <Label text="Участники" style="-fx-font-weight: bold;"/>
                     <ListView fx:id="membersList" prefHeight="220"/>
                     <HBox spacing="8">
-                        <Button text="Refresh" onAction="#onRefreshMembers"/>
-                        <Button text="Edit" onAction="#onEditMember"/>
-                        <Button text="Adjust Points" onAction="#onAdjustMemberPoints"/>
+                        <Button text="Обновить" onAction="#onRefreshMembers"/>
+                        <Button text="Изменить" onAction="#onEditMember"/>
+                        <Button text="Изменить баллы" onAction="#onAdjustMemberPoints"/>
                     </HBox>
                 </VBox>
             </Tab>
-            <Tab fx:id="rewardsTab" text="Rewards">
+            <Tab fx:id="rewardsTab" text="Награды">
                 <VBox spacing="8" alignment="TOP_LEFT">
-                    <Label text="Rewards Catalogue" style="-fx-font-weight: bold;"/>
+                    <Label text="Каталог наград" style="-fx-font-weight: bold;"/>
                     <ListView fx:id="rewardsList" prefHeight="220"/>
                     <HBox spacing="8">
-                        <Button text="Refresh" onAction="#onRefreshRewards"/>
-                        <Button text="Add" onAction="#onAddReward"/>
-                        <Button text="Edit" onAction="#onEditReward"/>
-                        <Button text="Toggle Active" onAction="#onToggleReward"/>
-                        <Button text="Delete" onAction="#onDeleteReward"/>
+                        <Button text="Обновить" onAction="#onRefreshRewards"/>
+                        <Button text="Добавить" onAction="#onAddReward"/>
+                        <Button text="Изменить" onAction="#onEditReward"/>
+                        <Button text="Вкл/Выкл" onAction="#onToggleReward"/>
+                        <Button text="Удалить" onAction="#onDeleteReward"/>
                     </HBox>
                 </VBox>
             </Tab>
-            <Tab fx:id="transactionsTab" text="Transactions">
+            <Tab fx:id="transactionsTab" text="Транзакции">
                 <VBox spacing="8" alignment="TOP_LEFT">
-                    <Label text="Point Transactions" style="-fx-font-weight: bold;"/>
+                    <Label text="Транзакции балов" style="-fx-font-weight: bold;"/>
                     <HBox spacing="8" alignment="CENTER_LEFT">
-                        <Label text="Member ID:"/>
+                        <Label text="ID Участника:"/>
                         <TextField fx:id="txMemberFilter" promptText="optional" maxWidth="120"/>
-                        <Label text="Type:"/>
+                        <Label text="Тип:"/>
                         <ComboBox fx:id="txType" promptText="All" maxWidth="110"/>
-                        <Label text="From:"/>
+                        <Label text="С:"/>
                         <DatePicker fx:id="txFrom"/>
-                        <Label text="To:"/>
+                        <Label text="По:"/>
                         <DatePicker fx:id="txTo"/>
-                        <Button text="Refresh" onAction="#onRefreshTransactions"/>
-                        <Button text="Reset Filters" onAction="#onResetTransactions"/>
+                        <Button text="Обновить" onAction="#onRefreshTransactions"/>
+                        <Button text="Сбросить фильтры" onAction="#onResetTransactions"/>
                         <Pane HBox.hgrow="ALWAYS"/>
-                        <Label fx:id="txPageLabel" text="Page 1"/>
-                        <Button fx:id="txPrevBtn" text="Prev" onAction="#onTxPrev"/>
-                        <Button fx:id="txNextBtn" text="Next" onAction="#onTxNext"/>
+                        <Label fx:id="txPageLabel" text="Страница 1"/>
+                        <Button fx:id="txPrevBtn" text="Назад" onAction="#onTxPrev"/>
+                        <Button fx:id="txNextBtn" text="Вперед" onAction="#onTxNext"/>
                     </HBox>
                     <ListView fx:id="transactionsList" prefHeight="220"/>
                 </VBox>
             </Tab>
-            <Tab fx:id="reportsTab" text="Reports">
+            <Tab fx:id="reportsTab" text="Отчеты">
                 <VBox spacing="8" alignment="TOP_LEFT">
-                    <Label text="Insights" style="-fx-font-weight: bold;"/>
+                    <Label text="Показатели" style="-fx-font-weight: bold;"/>
                     <HBox spacing="8" alignment="CENTER_LEFT">
-                        <Label text="From:"/>
+                        <Label text="С:"/>
                         <DatePicker fx:id="reportFrom"/>
-                        <Label text="To:"/>
+                        <Label text="По:"/>
                         <DatePicker fx:id="reportTo"/>
-                        <Button text="Refresh" onAction="#onRefreshReport"/>
+                        <Button text="Обновить" onAction="#onRefreshReport"/>
                         <Pane HBox.hgrow="ALWAYS"/>
-                        <Label text="Range:"/>
-                        <Label fx:id="reportRangeLbl" text="All time" style="-fx-font-weight: bold;"/>
+                        <Label text="Период:"/>
+                        <Label fx:id="reportRangeLbl" text="За все время" style="-fx-font-weight: bold;"/>
                     </HBox>
                     <GridPane hgap="16" vgap="8">
                         <columnConstraints>
@@ -107,27 +107,27 @@
                         </columnConstraints>
                         <children>
                             <VBox alignment="CENTER" spacing="4">
-                                <Label text="Members"/>
+                                <Label text="Участнии"/>
                                 <Label fx:id="reportMembersLbl" text="0"
                                        style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
                             </VBox>
                             <VBox alignment="CENTER" spacing="4" GridPane.columnIndex="1">
-                                <Label text="Active Members"/>
+                                <Label text="Активные участнии"/>
                                 <Label fx:id="reportActiveLbl" text="0"
                                        style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
                             </VBox>
                             <VBox alignment="CENTER" spacing="4" GridPane.columnIndex="2">
-                                <Label text="Transactions"/>
+                                <Label text="Транзакции"/>
                                 <Label fx:id="reportTxLbl" text="0"
                                        style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
                             </VBox>
                             <VBox alignment="CENTER" spacing="4" GridPane.columnIndex="3">
-                                <Label text="Net Points"/>
+                                <Label text="Чистые баллы"/>
                                 <Label fx:id="reportPointsLbl" text="0"
                                        style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
                             </VBox>
                             <VBox alignment="CENTER" spacing="4" GridPane.columnIndex="4">
-                                <Label text="Avg tx / active"/>
+                                <Label text="Средн. транзакций/активн."/>
                                 <Label fx:id="reportAvgLbl" text="0"
                                        style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
                             </VBox>
@@ -135,23 +135,23 @@
                     </GridPane>
                     <HBox spacing="16">
                         <VBox spacing="6" alignment="TOP_LEFT" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS">
-                            <Label text="Transactions by type" style="-fx-font-weight: bold;"/>
+                            <Label text="Транзакции по типу" style="-fx-font-weight: bold;"/>
                             <ListView fx:id="reportTypeList" prefHeight="160"/>
                         </VBox>
                         <VBox spacing="6" alignment="TOP_LEFT" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS">
-                            <Label text="Top rewards" style="-fx-font-weight: bold;"/>
+                            <Label text="Топ наград" style="-fx-font-weight: bold;"/>
                             <ListView fx:id="reportRewardsList" prefHeight="160"/>
                         </VBox>
                     </HBox>
                 </VBox>
             </Tab>
-            <Tab fx:id="promotionsTab" text="Promotions">
+            <Tab fx:id="promotionsTab" text="Акции">
                 <VBox spacing="8" alignment="TOP_LEFT">
-                    <Label text="Scheduled Promotions" style="-fx-font-weight: bold;"/>
+                    <Label text="Запланированные акции" style="-fx-font-weight: bold;"/>
                     <ListView fx:id="promotionsList" prefHeight="220"/>
                     <HBox spacing="8">
-                        <Button text="Refresh" onAction="#onRefreshPromotions"/>
-                        <Button fx:id="promotionsCreateBtn" text="Create" onAction="#onCreatePromotion"/>
+                        <Button text="Обновить" onAction="#onRefreshPromotions"/>
+                        <Button fx:id="promotionsCreateBtn" text="Создать" onAction="#onCreatePromotion"/>
                     </HBox>
                 </VBox>
             </Tab>

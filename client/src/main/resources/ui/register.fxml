@@ -7,15 +7,15 @@
       xmlns="http://javafx.com/javafx/17"
       fx:controller="main.java.com.clubloyalty.client.view.RegisterController">
     <children>
-        <Label text="Registration"/>
-        <TextField fx:id="username" promptText="Username"/>
-        <PasswordField fx:id="password" promptText="Password"/>
-        <TextField fx:id="fullName" promptText="Full name"/>
-        <TextField fx:id="phone" promptText="Phone (or ID)"/>
+        <Label text="Регистрация"/>
+        <TextField fx:id="username" promptText="Никнейм"/>
+        <PasswordField fx:id="password" promptText="Пароль"/>
+        <TextField fx:id="fullName" promptText="ФИО"/>
+        <TextField fx:id="phone" promptText="Телефон"/>
         <HBox spacing="10" alignment="CENTER">
             <children>
-                <Button text="Register" onAction="#onRegister"/>
-                <Button text="Back" onAction="#back"/>
+                <Button text="Зарегистрироваться" onAction="#onRegister"/>
+                <Button text="Назад" onAction="#back"/>
             </children>
         </HBox>
     </children>

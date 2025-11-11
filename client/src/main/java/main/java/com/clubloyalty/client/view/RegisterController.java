@@ -45,21 +45,21 @@ public class RegisterController {
         invalid = true;
       } else if (!phoneVal.matches("\\d+")) {
         markError(phone);
-        Alerts.error("Registration", "Phone number must contain digits only");
+        Alerts.error("Registration", "Телефон должен содержать только цифры");
         return;
       } else if (phoneVal.length() < 7) {
         markError(phone);
-        Alerts.error("Registration", "Phone number must contain at least 7 digits");
+        Alerts.error("Registration", "Телефон слишком короткий");
         return;
       }
 
       if (invalid) {
-        Alerts.error("Registration", "Please fill in all highlighted fields");
+        Alerts.error("Registration", "Пожалуйста, заполните все обязательные поля");
         return;
       }
 
       api.register(usernameVal, passwordVal, fullNameVal, phoneVal);
-      Alerts.info("Registration", "Registration successful! You can now sign in.");
+      Alerts.info("Registration", "Регистрация прошла успешно! Пожалуйста, войдите в систему.");
       Parent root = FXMLLoader.load(getClass().getResource("/ui/login.fxml"));
       username.getScene().setRoot(root);
     } catch (Exception e) {

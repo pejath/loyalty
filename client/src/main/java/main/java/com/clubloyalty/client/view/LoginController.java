@@ -31,7 +31,7 @@ public class LoginController {
       invalid = true;
     }
     if (invalid) {
-      Alerts.error("Login", "Please fill in the highlighted fields");
+      Alerts.error("Login", "Пожалуйста, заполните все обязательные поля");
       return;
     }
 

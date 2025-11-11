@@ -9,60 +9,60 @@
          fx:controller="main.java.com.clubloyalty.client.view.DashboardController"
          tabClosingPolicy="UNAVAILABLE">
     <tabs>
-        <Tab text="Overview">
+        <Tab text="Обзор">
             <VBox spacing="12" alignment="TOP_LEFT">
                 <padding>
                     <Insets top="16" right="16" bottom="16" left="16"/>
                 </padding>
-                <Label text="Member Dashboard" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+                <Label text="Панель" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
                 <HBox spacing="16" alignment="CENTER_LEFT">
-                    <Label text="Name:"/>
+                    <Label text="Имя:"/>
                     <Label fx:id="nameLbl" text="-"/>
-                    <Label text="Tier:"/>
+                    <Label text="Тир:"/>
                     <Label fx:id="tierLbl" text="-"/>
-                    <Label text="Points:"/>
+                    <Label text="Баллы:"/>
                     <Label fx:id="pointsLbl" text="0"/>
                     <Pane HBox.hgrow="ALWAYS"/>
-                    <Button fx:id="adminBtn" text="Admin Panel" onAction="#onAdmin"/>
-                    <Button text="Logout" onAction="#onLogout"/>
+                    <Button fx:id="adminBtn" text="Панель администратора" onAction="#onAdmin"/>
+                    <Button text="Выход" onAction="#onLogout"/>
                 </HBox>
 
-                <Label text="Available Rewards" style="-fx-font-weight: bold;"/>
+                <Label text="Доступные награды" style="-fx-font-weight: bold;"/>
                 <ListView fx:id="rewardsList" prefHeight="240"/>
 
                 <HBox spacing="10">
-                    <Button text="Redeem" onAction="#onRedeem"/>
-                    <Button text="Refresh" onAction="#onRefresh"/>
+                    <Button text="Получить" onAction="#onRedeem"/>
+                    <Button text="Обновить" onAction="#onRefresh"/>
                 </HBox>
             </VBox>
         </Tab>
 
-        <Tab text="History">
+        <Tab text="История">
             <VBox spacing="10" alignment="TOP_LEFT">
                 <padding>
                     <Insets top="16" right="16" bottom="16" left="16"/>
                 </padding>
                 <HBox spacing="8" alignment="CENTER_LEFT">
-                    <Label text="From:"/>
+                    <Label text="С:"/>
                     <DatePicker fx:id="historyFrom"/>
-                    <Label text="To:"/>
+                    <Label text="По:"/>
                     <DatePicker fx:id="historyTo"/>
-                    <Label text="Type:"/>
+                    <Label text="Тип:"/>
                     <ComboBox fx:id="historyType" promptText="All"/>
-                    <Button text="Apply" onAction="#onHistoryFilter"/>
+                    <Button text="Применить" onAction="#onHistoryFilter"/>
                     <Pane HBox.hgrow="ALWAYS"/>
                 </HBox>
                 <ListView fx:id="historyList" prefHeight="260"/>
             </VBox>
         </Tab>
 
-        <Tab text="Notifications">
+        <Tab text="Уведомления">
             <VBox spacing="10" alignment="TOP_LEFT">
                 <padding>
                     <Insets top="16" right="16" bottom="16" left="16"/>
                 </padding>
                 <HBox spacing="8" alignment="CENTER_LEFT">
-                    <Label text="Notifications" style="-fx-font-weight: bold;"/>
+                    <Label text="Уведомления" style="-fx-font-weight: bold;"/>
                     <Pane HBox.hgrow="ALWAYS"/>
                     <Button text="Refresh" onAction="#onNotificationsRefresh"/>
                 </HBox>

@@ -108,7 +108,7 @@ public class AdminDashboardController {
         configureList(promotionsList, promotions, this::formatPromotion);
         if (txType != null) {
             txType.getItems().setAll("EARN", "REDEEM", "ADJUST");
-            txType.setPromptText("All");
+            txType.setPromptText("Все");
         }
 
         if (!isAdmin) {
@@ -182,12 +182,12 @@ public class AdminDashboardController {
             return;
         }
     var fields = List.of(
-        new FieldSpec("username", "Username", "", false, false),
-        new FieldSpec("password", "Password", "", true, false),
-        new FieldSpec("roles", "Roles (comma separated)", "ROLE_STAFF", false, false),
-        new FieldSpec("fullName", "Full name", "", false, false),
-        new FieldSpec("phone", "Phone (digits only)", "", false, false),
-        new FieldSpec("tierId", "Tier ID", "1", false, false)
+        new FieldSpec("username", "Никнейм", "", false, false),
+        new FieldSpec("password", "Пароль", "", true, false),
+        new FieldSpec("roles", "Роль", "ROLE_STAFF", false, false),
+        new FieldSpec("fullName", "ФИО", "", false, false),
+        new FieldSpec("phone", "Телефон", "", false, false),
+        new FieldSpec("tierId", "Тир ID", "1", false, false)
     );
     showForm("Create user", fields).ifPresent(values -> {
       List<String> roles = Arrays.stream(values.get("roles").split(","))
@@ -198,11 +198,11 @@ public class AdminDashboardController {
       try {
         String phoneVal = values.get("phone").trim();
         if (!phoneVal.matches("\\d+")) {
-          Alerts.error("Users", "Phone number must contain digits only");
+          Alerts.error("Users", "Телефон может содержать только цифры");
           return;
         }
         if (phoneVal.length() < 7) {
-          Alerts.error("Users", "Phone number must contain at least 7 digits");
+          Alerts.error("Users", "Телефон должен содержать не менее 7 цифр");
           return;
         }
         long tierId = Long.parseLong(values.get("tierId").trim());
@@ -216,7 +216,7 @@ public class AdminDashboardController {
         ));
         refreshUsers();
       } catch (NumberFormatException nfe) {
-        Alerts.error("Users", "Tier ID must be a number");
+        Alerts.error("Users", "Тир ID должен быть числом");
       } catch (Exception e) {
         Alerts.error("Users", e.getMessage());
       }
@@ -235,7 +235,7 @@ public class AdminDashboardController {
         }
         var selected = usersList.getSelectionModel().getSelectedItem();
         if (selected == null) {
-            Alerts.info("Users", "Select a user first");
+            Alerts.info("Users", "Сначала выберите пользователя");
             return;
         }
         try {
@@ -254,14 +254,14 @@ public class AdminDashboardController {
         }
         var selected = usersList.getSelectionModel().getSelectedItem();
         if (selected == null) {
-            Alerts.info("Users", "Select a user first");
+            Alerts.info("Users", "Сначала выберите пользователя");
             return;
         }
-        var fields = List.of(new FieldSpec("password", "New password", "", true, false));
+        var fields = List.of(new FieldSpec("password", "Новый пароль", "", true, false));
         showForm("Reset password", fields).ifPresent(values -> {
             try {
                 api.adminResetPassword(((Number) selected.get("id")).longValue(), values.get("password"));
-                Alerts.info("Users", "Password updated");
+                Alerts.info("Users", "Пароль сброшен");
             } catch (Exception e) {
                 Alerts.error("Users", e.getMessage());
             }
@@ -285,20 +285,20 @@ public class AdminDashboardController {
     public void onEditMember() {
         var selected = membersList.getSelectionModel().getSelectedItem();
         if (selected == null) {
-            Alerts.info("Members", "Select a member first");
+            Alerts.info("Members", "Сначала выберите пользователя");
             return;
         }
 
         var fields = List.of(
-                new FieldSpec("fullName", "Full name", String.valueOf(selected.get("fullName")), false, false),
-                new FieldSpec("phone", "Phone", String.valueOf(selected.get("phone")), false, false),
-                new FieldSpec("tierId", "Tier ID", String.valueOf(selected.get("tierId")), false, false)
+                new FieldSpec("fullName", "ФИО", String.valueOf(selected.get("fullName")), false, false),
+                new FieldSpec("phone", "Телефон", String.valueOf(selected.get("phone")), false, false),
+                new FieldSpec("tierId", "Тир ID", String.valueOf(selected.get("tierId")), false, false)
         );
         showForm("Edit member", fields).ifPresent(values -> {
             try {
                 String phoneVal = values.get("phone").trim();
                 if (!phoneVal.matches("\\d+")) {
-                    Alerts.error("Members", "Phone number must contain digits only");
+                    Alerts.error("Members", "Телефон может содержать только цифры");
                     return;
                 }
                 long tierId = Long.parseLong(values.get("tierId").trim());
@@ -309,7 +309,7 @@ public class AdminDashboardController {
                 ));
                 refreshMembers();
             } catch (NumberFormatException nfe) {
-                Alerts.error("Members", "Tier ID must be a number");
+                Alerts.error("Members", "Тир ID должен быть числом");
             } catch (Exception e) {
                 Alerts.error("Members", e.getMessage());
             }
@@ -326,26 +326,26 @@ public class AdminDashboardController {
 
         var fields = List.of(new FieldSpec(
                 "delta",
-                "Points delta (use negative to deduct)",
+                "Дельта поинтов (положительное или отрицательное число)",
                 "100",
                 false,
                 false));
-        showForm("Adjust member points", fields).ifPresent(values -> {
+        showForm("Изменить число баллов", fields).ifPresent(values -> {
             try {
                 long delta = Long.parseLong(values.get("delta"));
                 if (delta == 0) {
-                    Alerts.info("Members", "Delta must be non-zero");
+                    Alerts.info("Members", "Дельта не может быть нулём");
                     return;
                 }
                 var response = api.adminAdjustMemberPoints(
                         ((Number) selected.get("id")).longValue(), delta);
                 Object balanceObj = response != null ? response.get("balance") : null;
                 long balance = balanceObj instanceof Number ? ((Number) balanceObj).longValue() : 0L;
-                Alerts.info("Members", "Adjustment applied. New balance: " + balance);
+                Alerts.info("Members", "Изменения применены. Новый баланс: " + balance);
                 refreshMembers();
                 loadTransactions();
             } catch (NumberFormatException nfe) {
-                Alerts.error("Members", "Delta must be a whole number");
+                Alerts.error("Members", "Дельта должна быть числом");
             } catch (Exception e) {
                 Alerts.error("Members", e.getMessage());
             }
@@ -374,9 +374,9 @@ public class AdminDashboardController {
             return;
         }
         var fields = List.of(
-                new FieldSpec("title", "Title", "", false, false),
-                new FieldSpec("description", "Description", "", false, false),
-                new FieldSpec("cost", "Cost (points)", "100", false, false)
+                new FieldSpec("title", "Название", "", false, false),
+                new FieldSpec("description", "Описание", "", false, false),
+                new FieldSpec("cost", "Цена", "100", false, false)
         );
         showForm("Create reward", fields).ifPresent(values -> {
             try {
@@ -388,7 +388,7 @@ public class AdminDashboardController {
                 ));
                 refreshRewards();
             } catch (NumberFormatException nfe) {
-                Alerts.error("Rewards", "Cost must be a number");
+                Alerts.error("Rewards", "Цена должна быть числом");
             } catch (Exception e) {
                 Alerts.error("Rewards", e.getMessage());
             }
@@ -402,16 +402,16 @@ public class AdminDashboardController {
         }
         var selected = rewardsList.getSelectionModel().getSelectedItem();
         if (selected == null) {
-            Alerts.info("Rewards", "Select a reward first");
+            Alerts.info("Rewards", "Сначала выберите награду");
             return;
         }
 
         var fields = List.of(
-                new FieldSpec("title", "Title", String.valueOf(selected.get("title")), false, false),
-                new FieldSpec("description", "Description", String.valueOf(selected.get("description")), false, false),
-                new FieldSpec("cost", "Cost (points)", String.valueOf(selected.get("cost")), false, false)
+                new FieldSpec("title", "Название", String.valueOf(selected.get("title")), false, false),
+                new FieldSpec("description", "Описание", String.valueOf(selected.get("description")), false, false),
+                new FieldSpec("cost", "Цена", String.valueOf(selected.get("cost")), false, false)
         );
-        showForm("Edit reward", fields).ifPresent(values -> {
+        showForm("Изменить Награду", fields).ifPresent(values -> {
             try {
                 int cost = Integer.parseInt(values.get("cost"));
                 boolean active = Boolean.TRUE.equals(selected.get("active"));
@@ -423,7 +423,7 @@ public class AdminDashboardController {
                 ));
                 refreshRewards();
             } catch (NumberFormatException nfe) {
-                Alerts.error("Rewards", "Cost must be a number");
+                Alerts.error("Rewards", "Цена должна быть числом");
             } catch (Exception e) {
                 Alerts.error("Rewards", e.getMessage());
             }
@@ -437,7 +437,7 @@ public class AdminDashboardController {
         }
         var selected = rewardsList.getSelectionModel().getSelectedItem();
         if (selected == null) {
-            Alerts.info("Rewards", "Select a reward first");
+            Alerts.info("Rewards", "Сначала выберите награду");
             return;
         }
         try {
@@ -456,13 +456,13 @@ public class AdminDashboardController {
         }
         var selected = rewardsList.getSelectionModel().getSelectedItem();
         if (selected == null) {
-            Alerts.info("Rewards", "Select a reward first");
+            Alerts.info("Rewards", "Сначала выберите награду");
             return;
         }
         Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
-        confirm.setTitle("Delete reward");
-        confirm.setHeaderText("Delete " + selected.get("title") + "?");
-        confirm.setContentText("This action cannot be undone.");
+        confirm.setTitle("Удалить награду");
+        confirm.setHeaderText("Удалить " + selected.get("title") + "?");
+        confirm.setContentText("Это действие не может быть отменено.");
         confirm.showAndWait().ifPresent(btn -> {
             if (btn == ButtonType.OK) {
                 try {
@@ -556,7 +556,7 @@ public class AdminDashboardController {
     @FXML
     public void onTxNext() {
         if (txPage >= txTotalPages - 1) {
-            Alerts.info("Transactions", "Already at the last page");
+            Alerts.info("Transactions", "Уже на последней странице");
             return;
         }
         txPage++;
@@ -566,7 +566,7 @@ public class AdminDashboardController {
     @FXML
     public void onTxPrev() {
         if (txPage <= 0) {
-            Alerts.info("Transactions", "Already at the first page");
+            Alerts.info("Transactions", "Уже на первой странице");
             return;
         }
         txPage--;
@@ -601,7 +601,7 @@ public class AdminDashboardController {
             try {
                 memberId = Long.parseLong(txMemberFilter.getText().trim());
             } catch (NumberFormatException e) {
-                Alerts.error("Transactions", "Member ID must be a number");
+                Alerts.error("Transactions", "ID участника должено быть числом");
                 return;
             }
         }
@@ -620,7 +620,7 @@ public class AdminDashboardController {
             int totalPages = Math.max(1, ((Number) response.getOrDefault("totalPages", 1)).intValue());
             txPage = Math.min(currentPage, totalPages - 1);
             txTotalPages = totalPages;
-            txPageLabel.setText(String.format("Page %d of %d", txPage + 1, totalPages));
+            txPageLabel.setText(String.format("Страница %d из %d", txPage + 1, totalPages));
             updateTxPagingButtons();
         } catch (Exception e) {
             Alerts.error("Transactions", e.getMessage());
@@ -719,7 +719,7 @@ public class AdminDashboardController {
 
     private boolean ensureAdmin(String feature) {
         if (!isAdmin) {
-            Alerts.info(feature, "Available to administrators only");
+            Alerts.info(feature, "Только для администраторов");
             return false;
         }
         return true;
@@ -749,7 +749,7 @@ public class AdminDashboardController {
 
     private Optional<Map<String, Object>> showPromotionDialog() {
         Dialog<Map<String, Object>> dialog = new Dialog<>();
-        dialog.setTitle("Create promotion");
+        dialog.setTitle("Создать акцию");
 
         ButtonType saveButtonType = new ButtonType("Save", ButtonBar.ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(saveButtonType, ButtonType.CANCEL);
@@ -842,17 +842,17 @@ public class AdminDashboardController {
             String action = actionBox.getValue();
 
             if (title.isEmpty()) {
-                Alerts.info("Validation", "Title is required");
+                Alerts.info("Validation", "Название обязательно");
                 event.consume();
                 return;
             }
             if (description.isEmpty()) {
-                Alerts.info("Validation", "Description is required");
+                Alerts.info("Validation", "Описание обязательно");
                 event.consume();
                 return;
             }
             if (action == null || action.isBlank()) {
-                Alerts.info("Validation", "Action is required");
+                Alerts.info("Validation", "Действие обязательно");
                 event.consume();
                 return;
             }
@@ -860,12 +860,12 @@ public class AdminDashboardController {
             Instant startInstant = composeInstant(startDate, startHour, startMinute);
             Instant endInstant = composeInstant(endDate, endHour, endMinute);
             if (startInstant == null || endInstant == null) {
-                Alerts.info("Validation", "Start and end time must be set");
+                Alerts.info("Validation", "Начало и конец акции обязательны");
                 event.consume();
                 return;
             }
             if (!startInstant.isBefore(endInstant)) {
-                Alerts.info("Validation", "Start time must be before end time");
+                Alerts.info("Validation", "Начало акции должно быть раньше конца");
                 event.consume();
                 return;
             }
@@ -873,25 +873,25 @@ public class AdminDashboardController {
             if ("AWARD_POINTS".equals(action)) {
                 String pointsText = pointsField.getText().trim();
                 if (pointsText.isEmpty()) {
-                    Alerts.info("Validation", "Points amount is required");
+                    Alerts.info("Validation", "Количество поинтов обязательно");
                     event.consume();
                     return;
                 }
                 try {
                     int points = Integer.parseInt(pointsText);
                     if (points <= 0) {
-                        Alerts.info("Validation", "Points amount must be positive");
+                        Alerts.info("Validation", "Количество поинтов должно быть положительным числом");
                         event.consume();
                         return;
                     }
                 } catch (NumberFormatException ex) {
-                    Alerts.info("Validation", "Points amount must be a number");
+                    Alerts.info("Validation", "Количество поинтов должно быть числом");
                     event.consume();
                     return;
                 }
             } else {
                 if (notifTitleField.getText().trim().isEmpty() || notifMessageArea.getText().trim().isEmpty()) {
-                    Alerts.info("Validation", "Notification title and message are required");
+                    Alerts.info("Validation", "Название и сообщение уведомления обязательны");
                     event.consume();
                     return;
                 }

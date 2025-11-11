@@ -34,7 +34,7 @@ public class RewardsController {
     public void onRedeem() {
         int idx = rewardsList.getSelectionModel().getSelectedIndex();
         if (idx < 0) {
-            Alerts.info("Redeem", "Please select a reward first");
+            Alerts.info("Redeem", "Пожалуйста, сначала выберите награду");
             return;
         }
         var r = rewards.get(idx);
@@ -42,7 +42,7 @@ public class RewardsController {
             long rid = ((Number) r.get("id")).longValue();
             long mid = ((Number) me.get("id")).longValue();
             var tx = api.redeem(rid, mid);
-            Alerts.info("Redeem", "Redeemed successfully. New balance: " + tx.get("balance"));
+            Alerts.info("Redeem", "Успешно. Новый баланс: " + tx.get("balance"));
             initialize();
         } catch (Exception e) {
             Alerts.error("Redeem", e.getMessage());

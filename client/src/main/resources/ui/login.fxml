@@ -15,12 +15,12 @@
         <Insets top="24" right="36" bottom="24" left="36"/>
       </padding>
       <children>
-        <Label text="Loyalty Login" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
-        <TextField fx:id="username" promptText="Username" maxWidth="260"/>
-        <PasswordField fx:id="password" promptText="Password" maxWidth="260"/>
+        <Label text="Loyalty" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+        <TextField fx:id="username" promptText="Никнейм" maxWidth="260"/>
+        <PasswordField fx:id="password" promptText="Пароль" maxWidth="260"/>
         <HBox spacing="12" alignment="CENTER">
-          <Button text="Login" onAction="#onLogin" defaultButton="true" prefWidth="110"/>
-          <Button text="Register" onAction="#openRegister" prefWidth="110"/>
+          <Button text="Войти" onAction="#onLogin" defaultButton="true" prefWidth="110"/>
+          <Button text="Регистрация" onAction="#openRegister" prefWidth="110"/>
         </HBox>
       </children>
     </VBox>

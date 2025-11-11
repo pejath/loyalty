@@ -49,7 +49,7 @@ public class DashboardController {
     public void initialize() {
         if (historyType != null) {
             historyType.getItems().setAll("EARN", "REDEEM", "ADJUST");
-            historyType.setPromptText("All");
+            historyType.setPromptText("Все");
         }
 
         try {
@@ -158,7 +158,7 @@ public class DashboardController {
     @FXML
     public void onHistoryExport() {
         if (history == null || history.isEmpty()) {
-            Alerts.info("History", "Nothing to export");
+            Alerts.info("History", "Нет данных для экспорта");
             return;
         }
         String joined = history.stream().map(this::formatHistory).collect(Collectors.joining("\n"));
@@ -179,14 +179,14 @@ public class DashboardController {
         try {
             int idx = rewardsList.getSelectionModel().getSelectedIndex();
             if (idx < 0) {
-                Alerts.info("Rewards", "Select a reward first");
+                Alerts.info("Rewards", "Сначала выберите награду");
                 return;
             }
             Map<String, Object> reward = rewards.get(idx);
             long rid = ((Number) reward.get("id")).longValue();
             long mid = ((Number) me.get("id")).longValue();
             Map<String, Object> tx = api.redeem(rid, mid);
-            Alerts.info("Rewards", "Balance updated: " + tx.get("balance"));
+            Alerts.info("Rewards", "Новый баланс: " + tx.get("balance"));
             loadProfile();
             loadRewards();
             refreshHistory();
@@ -210,7 +210,7 @@ public class DashboardController {
     @FXML
     public void onAdmin() {
         if (!AuthSession.hasRole("ROLE_ADMIN") && !AuthSession.hasRole("ROLE_STAFF")) {
-            Alerts.info("Admin", "You do not have permissions");
+            Alerts.info("Admin", "Недостаточно прав");
             return;
         }
         try {
