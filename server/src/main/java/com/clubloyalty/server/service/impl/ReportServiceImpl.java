@@ -11,6 +11,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -42,6 +44,7 @@ public class ReportServiceImpl implements ReportService {
         dto.avgTransactionsPerActiveMember =
                 dto.activeMembers == 0 ? 0 : (double) dto.totalTransactions / dto.activeMembers;
         dto.topRewards = topRewards(from, to);
+        dto.pointsSpentPerDay = aggregatePointsSpentPerDay(from, to);
         return dto;
     }
 
@@ -137,5 +140,33 @@ public class ReportServiceImpl implements ReportService {
         }
         query.setMaxResults(5);
         return query.getResultList();
+    }
+
+    private Map<String, Long> aggregatePointsSpentPerDay(Instant from, Instant to) {
+        StringBuilder jpql = new StringBuilder(
+                "select t.createdAt, t.amount from PointsTransaction t where t.type = com.clubloyalty.server.domain.TxnType.REDEEM");
+        if (from != null) {
+            jpql.append(" and t.createdAt >= :from");
+        }
+        if (to != null) {
+            jpql.append(" and t.createdAt <= :to");
+        }
+        TypedQuery<Object[]> query = em.createQuery(jpql.toString(), Object[].class);
+        if (from != null) {
+            query.setParameter("from", from);
+        }
+        if (to != null) {
+            query.setParameter("to", to);
+        }
+        Map<String, Long> byDay = new LinkedHashMap<>();
+        for (Object[] row : query.getResultList()) {
+            Instant created = (Instant) row[0];
+            long amount = (Long) row[1];
+            LocalDate day = created.atZone(ZoneId.systemDefault()).toLocalDate();
+            String key = day.toString();
+            long spent = Math.abs(amount);
+            byDay.put(key, byDay.getOrDefault(key, 0L) + spent);
+        }
+        return byDay;
     }
 }

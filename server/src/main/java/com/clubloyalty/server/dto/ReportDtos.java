@@ -28,5 +28,6 @@ public class ReportDtos {
         public double avgTransactionsPerActiveMember;
         public Map<String, Long> transactionsByType;
         public List<RewardStat> topRewards;
+        public Map<String, Long> pointsSpentPerDay;
     }
 }

@@ -7,6 +7,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.control.Tooltip;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.util.Callback;
@@ -60,9 +64,9 @@ public class AdminDashboardController {
     @FXML
     private Button promotionsCreateBtn;
     @FXML
-    private ListView<String> reportTypeList;
+    private LineChart<String, Number> reportDailyChart;
     @FXML
-    private ListView<String> reportRewardsList;
+    private BarChart<String, Number> reportRewardsChart;
     @FXML
     private DatePicker reportFrom;
     @FXML
@@ -513,6 +517,13 @@ public class AdminDashboardController {
         }
     }
 
+    @FXML
+    public void onResetReport() {
+        if (reportFrom != null) reportFrom.setValue(null);
+        if (reportTo != null) reportTo.setValue(null);
+        onRefreshReport();
+    }
+
     private void refreshReport() throws Exception {
         if (reportMembersLbl == null) return;
         LocalDate fromDate = reportFrom == null ? null : reportFrom.getValue();
@@ -528,22 +539,49 @@ public class AdminDashboardController {
         reportAvgLbl.setText(avg == null ? "0" : String.format("%.2f", ((Number) avg).doubleValue()));
         reportRangeLbl.setText(buildRangeLabel(summary.get("from"), summary.get("to")));
 
-        var byType = (Map<String, Object>) summary.get("transactionsByType");
-        if (reportTypeList != null) {
-            if (byType == null || byType.isEmpty()) {
-                reportTypeList.getItems().clear();
-            } else {
-                reportTypeList.getItems().setAll(byType.entrySet().stream()
-                        .map(e -> e.getKey() + ": " + e.getValue())
-                        .collect(Collectors.toList()));
+        var spentPerDay = (Map<String, Object>) summary.get("pointsSpentPerDay");
+        if (reportDailyChart != null) {
+            reportDailyChart.getData().clear();
+            if (spentPerDay != null && !spentPerDay.isEmpty()) {
+                XYChart.Series<String, Number> series = new XYChart.Series<>();
+                spentPerDay.entrySet().stream()
+                        .sorted(Map.Entry.comparingByKey())
+                        .forEach(e -> {
+                            XYChart.Data<String, Number> d = new XYChart.Data<>(e.getKey(), ((Number) e.getValue()).longValue());
+                            series.getData().add(d);
+                            attachTooltip(d, e.getKey() + ": " + e.getValue());
+                        });
+                reportDailyChart.getData().add(series);
             }
         }
 
         var topRewards = (List<Map<String, Object>>) summary.getOrDefault("topRewards", List.of());
-        if (reportRewardsList != null) {
-            reportRewardsList.getItems().setAll(topRewards.stream()
-                    .map(r -> r.get("title") + " - " + r.get("redemptions") + " redeems")
-                    .collect(Collectors.toList()));
+        if (reportRewardsChart != null) {
+            reportRewardsChart.getData().clear();
+            if (topRewards != null && !topRewards.isEmpty()) {
+                XYChart.Series<String, Number> series = new XYChart.Series<>();
+                for (var r : topRewards) {
+                    String title = Objects.toString(r.get("title"), "-");
+                    Number redemptions = (Number) r.getOrDefault("redemptions", 0);
+                    XYChart.Data<String, Number> d = new XYChart.Data<>(title, redemptions.longValue());
+                    series.getData().add(d);
+                    attachTooltip(d, title + ": " + redemptions);
+                }
+                reportRewardsChart.getData().add(series);
+            }
+        }
+    }
+
+    private void attachTooltip(XYChart.Data<String, Number> data, String text) {
+        Tooltip tooltip = new Tooltip(text);
+        if (data.getNode() != null) {
+            Tooltip.install(data.getNode(), tooltip);
+        } else {
+            data.nodeProperty().addListener((obs, oldNode, newNode) -> {
+                if (newNode != null) {
+                    Tooltip.install(newNode, tooltip);
+                }
+            });
         }
     }
 

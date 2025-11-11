@@ -3,6 +3,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.chart.*?>
 
 <VBox xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx"
       fx:controller="main.java.com.clubloyalty.client.view.AdminDashboardController"
@@ -93,6 +94,7 @@
                         <Label text="По:"/>
                         <DatePicker fx:id="reportTo"/>
                         <Button text="Обновить" onAction="#onRefreshReport"/>
+                        <Button text="Сбросить" onAction="#onResetReport"/>
                         <Pane HBox.hgrow="ALWAYS"/>
                         <Label text="Период:"/>
                         <Label fx:id="reportRangeLbl" text="За все время" style="-fx-font-weight: bold;"/>
@@ -135,12 +137,26 @@
                     </GridPane>
                     <HBox spacing="16">
                         <VBox spacing="6" alignment="TOP_LEFT" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS">
-                            <Label text="Транзакции по типу" style="-fx-font-weight: bold;"/>
-                            <ListView fx:id="reportTypeList" prefHeight="160"/>
+                            <Label text="Объем транзакций" style="-fx-font-weight: bold;"/>
+                            <LineChart fx:id="reportDailyChart" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS" legendVisible="false">
+                                <xAxis>
+                                    <CategoryAxis label="Дата"/>
+                                </xAxis>
+                                <yAxis>
+                                    <NumberAxis label="Поинты"/>
+                                </yAxis>
+                            </LineChart>
                         </VBox>
                         <VBox spacing="6" alignment="TOP_LEFT" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS">
                             <Label text="Топ наград" style="-fx-font-weight: bold;"/>
-                            <ListView fx:id="reportRewardsList" prefHeight="160"/>
+                            <BarChart fx:id="reportRewardsChart" VBox.vgrow="ALWAYS" HBox.hgrow="ALWAYS" legendVisible="false">
+                                <xAxis>
+                                    <CategoryAxis label="Награды"/>
+                                </xAxis>
+                                <yAxis>
+                                    <NumberAxis label="Покупки"/>
+                                </yAxis>
+                            </BarChart>
                         </VBox>
                     </HBox>
                 </VBox>
